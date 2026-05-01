@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Moradas do Velho Chico - Lotes em Pompéu</title>
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://unpkg.com/lucide-static/font/lucide.css">
+</head>
+
+<body>
+    <div id="root"></div>
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+        const { Phone, MapPin, CheckCircle2, Clock, TrendingUp, Trees, MessageCircle, ArrowRight, ShieldCheck, Zap, Users } = lucide;
+
+        const App = () => {
+            const [formData, setFormData] = useState({ nome: '', telefone: '', cidade: '', formaPagamento: '' });
+            const [timeLeft, setTimeLeft] = useState({ hours: 14, minutes: 32, seconds: 45 });
+            const colors = { primaryBg: '#0b1c10', primaryText: '#f4940c' };
+
+            useEffect(() => {
+                const timer = setInterval(() => {
+                    setTimeLeft(prev => {
+                        if (prev.seconds > 0) return { ...prev, seconds: prev.seconds - 1 };
+                        if (prev.minutes > 0) return { ...prev, minutes: prev.minutes - 1, seconds: 59 };
+                        if (prev.hours > 0) return { hours: prev.hours - 1, minutes: 59, seconds: 59 };
+                        return prev;
+                    });
+                }, 1000);
+                return () => clearInterval(timer);
+            }, []);
+
+            const handleSubmit = (e) => {
+                e.preventDefault();
+                const message = `Olá! Meu nome é ${formData.nome}. Gostaria de informações sobre o Moradas do Velho Chico. Moro em ${formData.cidade} e pretendo pagar via ${formData.formaPagamento}.`;
+                window.open(`https://wa.me/5531991242924?text=${encodeURIComponent(message)}`, '_blank');
+            };
+
+            const scrollToForm = () => {
+                const element = document.getElementById('cadastro-form');
+                if (element) element.scrollIntoView({ behavior: 'smooth' });
+            };
+
+            return (
+                <div className="font-sans text-stone-200 bg-[#0b1c10] overflow-x-hidden">
+                    <a href="https://wa.me/5531991242924" target="_blank" className="fixed bottom-6 right-6 z-50 bg-[#25D366] text-white p-4 rounded-full shadow-2xl flex items-center justify-center group">
+                        <MessageCircle size={32} fill="currentColor" />
+                    </a>
+
+                    <section className="relative h-screen flex items-center justify-center text-center px-4 overflow-hidden">
+                        <div className="absolute inset-0 z-0 bg-[#0b1c10]">
+                            <img src="https://media.istockphoto.com/id/2160665454/pt/foto/sunset-on-the-s%C3%A3o-francisco-river-northeast-of-brazil.jpg?s=612x612&w=0&k=20&c=zgQllexZhCtsTwHKK6KB3UznOffWTm6MDWbgLsl68cs=" alt="Rio São Francisco" className="w-full h-full object-cover opacity-30 grayscale-[50%]" />
+                        </div>
+                        <div className="relative z-10 max-w-4xl">
+                            <span className="bg-[#f4940c] text-[#0b1c10] px-4 py-1 rounded-full text-sm font-black tracking-widest uppercase mb-6 inline-block">Últimas Unidades</span>
+                            <h1 className="text-5xl md:text-8xl font-black mb-6 leading-tight text-white">
+                                O RIO SÃO <span style={{ color: colors.primaryText }}>FRANCISCO</span> <br />
+                                <span style={{ color: colors.primaryText }}>NO SEU QUINTAL</span>
+                            </h1>
+                            <button onClick={scrollToForm} className="hover:scale-105 text-[#0b1c10] text-xl font-black py-6 px-12 rounded-xl shadow-2xl transition-all flex items-center mx-auto gap-3 uppercase tracking-tighter" style={{ backgroundColor: colors.primaryText }}>
+                                Quero meu lote agora <ArrowRight size={24} />
+                            </button>
+                        </div>
+                    </section>
+
+                    <section className="py-24 relative text-center">
+                        <h2 className="text-3xl font-black uppercase tracking-widest mb-4" style={{ color: colors.primaryText }}>Investimento que cabe no bolso</h2>
+                        <div className="max-w-2xl mx-auto bg-[#07130a] rounded-[3rem] p-12 text-white shadow-[0_0_50px_rgba(244,148,12,0.1)] border-2 border-stone-800">
+                            <div className="text-8xl md:text-[10rem] font-black mb-4 tracking-tighter leading-none" style={{ color: colors.primaryText }}>R$ 589</div>
+                            <p className="text-3xl font-bold text-white mb-8 italic opacity-80">ou R$ 19,60 por dia</p>
+                            <p className="font-black uppercase text-xl animate-bounce" style={{ color: colors.primaryText }}>ÚLTIMAS 3 UNIDADES COM ESTE VALOR!</p>
+                        </div>
+                    </section>
+
+                    <section id="cadastro-form" className="py-24 container mx-auto px-4">
+                        <div className="max-w-6xl mx-auto bg-[#07130a] rounded-[3rem] shadow-3xl overflow-hidden grid grid-cols-1 lg:grid-cols-2 border border-stone-800">
+                            <div className="p-12 md:p-20" style={{ backgroundColor: colors.primaryText }}>
+                                <h2 className="text-5xl font-black mb-8 uppercase leading-tight text-[#0b1c10]">A sua nova vida começa agora!</h2>
+                                <p className="text-xl font-bold text-[#0b1c10] opacity-80">Fale com nossa equipe técnica. Garantimos a aprovação do seu crédito sem burocracia bancária.</p>
+                            </div>
+                            <div className="p-12 md:p-20 bg-[#0b1c10]">
+                                <form onSubmit={handleSubmit} className="space-y-6">
+                                    <input required placeholder="Seu nome" className="w-full p-5 rounded-2xl bg-stone-900 border-2 border-stone-800 text-white" value={formData.nome} onChange={(e) => setFormData({ ...formData, nome: e.target.value })} />
+                                    <input required placeholder="WhatsApp (31) 9..." className="w-full p-5 rounded-2xl bg-stone-900 border-2 border-stone-800 text-white" value={formData.telefone} onChange={(e) => setFormData({ ...formData, telefone: e.target.value })} />
+                                    <input required placeholder="Sua cidade" className="w-full p-5 rounded-2xl bg-stone-900 border-2 border-stone-800 text-white" value={formData.cidade} onChange={(e) => setFormData({ ...formData, cidade: e.target.value })} />
+                                    <select required className="w-full p-5 rounded-2xl bg-stone-900 border-2 border-stone-800 text-white cursor-pointer" value={formData.formaPagamento} onChange={(e) => setFormData({ ...formData, formaPagamento: e.target.value })}>
+                                        <option value="">Forma de Pagamento...</option>
+                                        <option value="Parcelamento">Parcelamento Direto</option>
+                                        <option value="A vista">À Vista</option>
+                                        <option value="Troca">Troca em Veículo</option>
+                                    </select>
+                                    <button type="submit" className="w-full py-6 rounded-2xl text-xl font-black uppercase text-[#0b1c10]" style={{ backgroundColor: colors.primaryText }}>Garantir meu lote <Zap size={24} fill="currentColor" /></button>
+                                </form>
+                            </div>
+                        </div>
+                    </section>
+
+                    <footer className="bg-[#07130a] py-20 text-center border-t border-stone-900">
+                        <div className="flex justify-center gap-8 mb-4">
+                            <span className="text-xs uppercase font-bold tracking-tighter">H: {timeLeft.hours}</span>
+                            <span className="text-xs uppercase font-bold tracking-tighter">M: {timeLeft.minutes}</span>
+                            <span className="text-xs uppercase font-bold tracking-tighter" style={{ color: colors.primaryText }}>S: {timeLeft.seconds}</span>
+                        </div>
+                        <p className="text-[10px] uppercase tracking-[0.3em] font-black opacity-20">© 2024 - Moradas do Velho Chico</p>
+                    </footer>
+                </div>
+            );
+        };
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+
+</html>
