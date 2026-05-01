@@ -1,120 +1,393 @@
 <!DOCTYPE html>
-<html lang="pt-br">
-
+<html lang="pt-br" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Moradas do Velho Chico - Lotes em Pompéu</title>
-    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <title>Moradas do Velho Chico | Lançamento</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://unpkg.com/lucide-static/font/lucide.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0b1c10;
+        }
+
+        @keyframes fade-in {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate-fade-in {
+            animation: fade-in 1.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #0b1c10; }
+        ::-webkit-scrollbar-thumb { background: #14321c; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #f4940c; }
+
+        .bg-primary { background-color: #0b1c10; }
+        .text-accent { color: #f4940c; }
+        .bg-accent { background-color: #f4940c; }
+        .border-accent { border-color: #f4940c; }
+
+        select {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23f4940c'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 1.5rem center;
+            background-size: 1.2rem;
+            appearance: none;
+        }
+    </style>
 </head>
+<body class="text-stone-200 overflow-x-hidden selection:bg-[#f4940c] selection:text-[#0b1c10]">
 
-<body>
-    <div id="root"></div>
-    <script type="text/babel">
-        const { useState, useEffect } = React;
-        const { Phone, MapPin, CheckCircle2, Clock, TrendingUp, Trees, MessageCircle, ArrowRight, ShieldCheck, Zap, Users } = lucide;
+    <!-- Botão Flutuante WhatsApp -->
+    <a href="https://wa.me/5531991242924" target="_blank" rel="noopener noreferrer"
+        class="fixed bottom-6 right-6 z-50 bg-[#25D366] text-white p-4 rounded-full shadow-2xl hover:scale-110 transition-transform flex items-center justify-center group"
+        aria-label="Falar no WhatsApp">
+        <span class="max-w-0 overflow-hidden group-hover:max-w-xs transition-all duration-500 whitespace-nowrap mr-2 font-black uppercase text-sm">Falar com Consultor</span>
+        <i data-lucide="message-circle" class="w-8 h-8 fill-current"></i>
+    </a>
 
-        const App = () => {
-            const [formData, setFormData] = useState({ nome: '', telefone: '', cidade: '', formaPagamento: '' });
-            const [timeLeft, setTimeLeft] = useState({ hours: 14, minutes: 32, seconds: 45 });
-            const colors = { primaryBg: '#0b1c10', primaryText: '#f4940c' };
+    <!-- Hero Section -->
+    <section class="relative min-h-screen flex items-center justify-center text-center px-4 overflow-hidden">
+        <div class="absolute inset-0 z-0 bg-[#0b1c10]">
+            <img src="https://media.istockphoto.com/id/2160665454/pt/foto/sunset-on-the-s%C3%A3o-francisco-river-northeast-of-brazil.jpg?s=612x612&w=0&k=20&c=zgQllexZhCtsTwHKK6KB3UznOffWTm6MDWbgLsl68cs=" 
+                 alt="Rio São Francisco" class="w-full h-full object-cover opacity-40 grayscale-[30%]">
+        </div>
+        
+        <div class="relative z-10 max-w-5xl animate-fade-in py-20">
+            <div class="inline-block bg-accent text-primary px-6 py-2 rounded-full text-xs md:text-sm font-black tracking-widest uppercase mb-8 shadow-lg">
+                Grande Lançamento - Últimas Unidades
+            </div>
+            <h1 class="text-5xl md:text-8xl font-black mb-8 leading-[1.1] text-white tracking-tighter">
+                O RIO SÃO <span class="text-accent">FRANCISCO</span> <br /> 
+                <span class="text-accent">NO SEU QUINTAL</span>
+            </h1>
+            <p class="text-xl md:text-3xl mb-12 text-stone-300 font-medium max-w-3xl mx-auto leading-relaxed">
+                Se você tem 20 reais no bolso por dia, você já é dono de terra. 
+                Comece a construir seu patrimônio hoje mesmo.
+            </p>
+            <a href="#cadastro-form" class="hover:brightness-110 active:scale-95 bg-accent text-primary text-xl md:text-2xl font-black py-6 px-14 rounded-2xl shadow-[0_20px_50px_rgba(244,148,12,0.3)] transition-all inline-flex items-center mx-auto gap-4 uppercase tracking-tighter">
+                Quero meu lote agora <i data-lucide="arrow-right" class="w-7 h-7"></i>
+            </a>
+        </div>
+    </section>
 
-            useEffect(() => {
-                const timer = setInterval(() => {
-                    setTimeLeft(prev => {
-                        if (prev.seconds > 0) return { ...prev, seconds: prev.seconds - 1 };
-                        if (prev.minutes > 0) return { ...prev, minutes: prev.minutes - 1, seconds: 59 };
-                        if (prev.hours > 0) return { hours: prev.hours - 1, minutes: 59, seconds: 59 };
-                        return prev;
-                    });
-                }, 1000);
-                return () => clearInterval(timer);
-            }, []);
-
-            const handleSubmit = (e) => {
-                e.preventDefault();
-                const message = `Olá! Meu nome é ${formData.nome}. Gostaria de informações sobre o Moradas do Velho Chico. Moro em ${formData.cidade} e pretendo pagar via ${formData.formaPagamento}.`;
-                window.open(`https://wa.me/5531991242924?text=${encodeURIComponent(message)}`, '_blank');
-            };
-
-            const scrollToForm = () => {
-                const element = document.getElementById('cadastro-form');
-                if (element) element.scrollIntoView({ behavior: 'smooth' });
-            };
-
-            return (
-                <div className="font-sans text-stone-200 bg-[#0b1c10] overflow-x-hidden">
-                    <a href="https://wa.me/5531991242924" target="_blank" className="fixed bottom-6 right-6 z-50 bg-[#25D366] text-white p-4 rounded-full shadow-2xl flex items-center justify-center group">
-                        <MessageCircle size={32} fill="currentColor" />
-                    </a>
-
-                    <section className="relative h-screen flex items-center justify-center text-center px-4 overflow-hidden">
-                        <div className="absolute inset-0 z-0 bg-[#0b1c10]">
-                            <img src="https://media.istockphoto.com/id/2160665454/pt/foto/sunset-on-the-s%C3%A3o-francisco-river-northeast-of-brazil.jpg?s=612x612&w=0&k=20&c=zgQllexZhCtsTwHKK6KB3UznOffWTm6MDWbgLsl68cs=" alt="Rio São Francisco" className="w-full h-full object-cover opacity-30 grayscale-[50%]" />
-                        </div>
-                        <div className="relative z-10 max-w-4xl">
-                            <span className="bg-[#f4940c] text-[#0b1c10] px-4 py-1 rounded-full text-sm font-black tracking-widest uppercase mb-6 inline-block">Últimas Unidades</span>
-                            <h1 className="text-5xl md:text-8xl font-black mb-6 leading-tight text-white">
-                                O RIO SÃO <span style={{ color: colors.primaryText }}>FRANCISCO</span> <br />
-                                <span style={{ color: colors.primaryText }}>NO SEU QUINTAL</span>
-                            </h1>
-                            <button onClick={scrollToForm} className="hover:scale-105 text-[#0b1c10] text-xl font-black py-6 px-12 rounded-xl shadow-2xl transition-all flex items-center mx-auto gap-3 uppercase tracking-tighter" style={{ backgroundColor: colors.primaryText }}>
-                                Quero meu lote agora <ArrowRight size={24} />
-                            </button>
-                        </div>
-                    </section>
-
-                    <section className="py-24 relative text-center">
-                        <h2 className="text-3xl font-black uppercase tracking-widest mb-4" style={{ color: colors.primaryText }}>Investimento que cabe no bolso</h2>
-                        <div className="max-w-2xl mx-auto bg-[#07130a] rounded-[3rem] p-12 text-white shadow-[0_0_50px_rgba(244,148,12,0.1)] border-2 border-stone-800">
-                            <div className="text-8xl md:text-[10rem] font-black mb-4 tracking-tighter leading-none" style={{ color: colors.primaryText }}>R$ 589</div>
-                            <p className="text-3xl font-bold text-white mb-8 italic opacity-80">ou R$ 19,60 por dia</p>
-                            <p className="font-black uppercase text-xl animate-bounce" style={{ color: colors.primaryText }}>ÚLTIMAS 3 UNIDADES COM ESTE VALOR!</p>
-                        </div>
-                    </section>
-
-                    <section id="cadastro-form" className="py-24 container mx-auto px-4">
-                        <div className="max-w-6xl mx-auto bg-[#07130a] rounded-[3rem] shadow-3xl overflow-hidden grid grid-cols-1 lg:grid-cols-2 border border-stone-800">
-                            <div className="p-12 md:p-20" style={{ backgroundColor: colors.primaryText }}>
-                                <h2 className="text-5xl font-black mb-8 uppercase leading-tight text-[#0b1c10]">A sua nova vida começa agora!</h2>
-                                <p className="text-xl font-bold text-[#0b1c10] opacity-80">Fale com nossa equipe técnica. Garantimos a aprovação do seu crédito sem burocracia bancária.</p>
-                            </div>
-                            <div className="p-12 md:p-20 bg-[#0b1c10]">
-                                <form onSubmit={handleSubmit} className="space-y-6">
-                                    <input required placeholder="Seu nome" className="w-full p-5 rounded-2xl bg-stone-900 border-2 border-stone-800 text-white" value={formData.nome} onChange={(e) => setFormData({ ...formData, nome: e.target.value })} />
-                                    <input required placeholder="WhatsApp (31) 9..." className="w-full p-5 rounded-2xl bg-stone-900 border-2 border-stone-800 text-white" value={formData.telefone} onChange={(e) => setFormData({ ...formData, telefone: e.target.value })} />
-                                    <input required placeholder="Sua cidade" className="w-full p-5 rounded-2xl bg-stone-900 border-2 border-stone-800 text-white" value={formData.cidade} onChange={(e) => setFormData({ ...formData, cidade: e.target.value })} />
-                                    <select required className="w-full p-5 rounded-2xl bg-stone-900 border-2 border-stone-800 text-white cursor-pointer" value={formData.formaPagamento} onChange={(e) => setFormData({ ...formData, formaPagamento: e.target.value })}>
-                                        <option value="">Forma de Pagamento...</option>
-                                        <option value="Parcelamento">Parcelamento Direto</option>
-                                        <option value="A vista">À Vista</option>
-                                        <option value="Troca">Troca em Veículo</option>
-                                    </select>
-                                    <button type="submit" className="w-full py-6 rounded-2xl text-xl font-black uppercase text-[#0b1c10]" style={{ backgroundColor: colors.primaryText }}>Garantir meu lote <Zap size={24} fill="currentColor" /></button>
-                                </form>
-                            </div>
-                        </div>
-                    </section>
-
-                    <footer className="bg-[#07130a] py-20 text-center border-t border-stone-900">
-                        <div className="flex justify-center gap-8 mb-4">
-                            <span className="text-xs uppercase font-bold tracking-tighter">H: {timeLeft.hours}</span>
-                            <span className="text-xs uppercase font-bold tracking-tighter">M: {timeLeft.minutes}</span>
-                            <span className="text-xs uppercase font-bold tracking-tighter" style={{ color: colors.primaryText }}>S: {timeLeft.seconds}</span>
-                        </div>
-                        <p className="text-[10px] uppercase tracking-[0.3em] font-black opacity-20">© 2024 - Moradas do Velho Chico</p>
-                    </footer>
+    <!-- Stats -->
+    <section class="py-20 bg-[#07130a] border-y-4 border-accent shadow-2xl relative z-20">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-12 items-center text-center">
+                <div>
+                    <span class="text-6xl md:text-7xl font-black block mb-2 text-accent">+70%</span>
+                    <span class="text-stone-400 font-bold uppercase tracking-widest text-sm">Vendido em tempo recorde</span>
                 </div>
-            );
-        };
+                <div class="border-y md:border-y-0 md:border-x border-stone-800 py-10 md:py-0">
+                    <span class="text-6xl md:text-7xl font-black block mb-2 text-accent">408m²</span>
+                    <span class="text-stone-400 font-bold uppercase tracking-widest text-sm">Tamanho mínimo por chácara</span>
+                </div>
+                <div>
+                    <span class="text-6xl md:text-7xl font-black block mb-2 text-accent">20 min</span>
+                    <span class="text-stone-400 font-bold uppercase tracking-widest text-sm">Do centro de Pompéu/MG</span>
+                </div>
+            </div>
+        </div>
+    </section>
 
-        const root = ReactDOM.createRoot(document.getElementById('root'));
-        root.render(<App />);
+    <!-- Diferenciais -->
+    <section class="py-24 container mx-auto px-4">
+        <div class="text-center mb-20">
+            <h2 class="text-4xl md:text-6xl font-black mb-6 uppercase tracking-tighter text-accent">
+                Por que investir aqui?
+            </h2>
+            <div class="w-32 h-2 mx-auto rounded-full bg-accent"></div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
+            <div class="bg-[#0f2615] p-12 rounded-[2.5rem] shadow-2xl hover:bg-[#14321c] transition-colors border border-stone-800/50 group text-center md:text-left">
+                <div class="mb-8 text-accent transform group-hover:scale-110 transition-transform inline-block md:block"><i data-lucide="map-pin" class="w-14 h-14"></i></div>
+                <h3 class="text-2xl font-black mb-4 text-white uppercase tracking-tight">Localização Premium</h3>
+                <p class="text-stone-400 leading-relaxed text-lg">O refúgio perfeito sem ficar isolado. Próximo a Pompéu com acesso rápido e seguro.</p>
+            </div>
+            <div class="bg-[#0f2615] p-12 rounded-[2.5rem] shadow-2xl hover:bg-[#14321c] transition-colors border border-stone-800/50 group text-center md:text-left">
+                <div class="mb-8 text-accent transform group-hover:scale-110 transition-transform inline-block md:block"><i data-lucide="shield-check" class="w-14 h-14"></i></div>
+                <h3 class="text-2xl font-black mb-4 text-white uppercase tracking-tight">Sem Burocracia</h3>
+                <p class="text-stone-400 leading-relaxed text-lg">Financiamento direto. Não consultamos SPC/Serasa. Você assina e a terra já é sua.</p>
+            </div>
+            <div class="bg-[#0f2615] p-12 rounded-[2.5rem] shadow-2xl hover:bg-[#14321c] transition-colors border border-stone-800/50 group text-center md:text-left">
+                <div class="mb-8 text-accent transform group-hover:scale-110 transition-transform inline-block md:block"><i data-lucide="trees" class="w-14 h-14"></i></div>
+                <h3 class="text-2xl font-black mb-4 text-white uppercase tracking-tight">Valorização Real</h3>
+                <p class="text-stone-400 leading-relaxed text-lg">Terrenos à beira do Rio São Francisco são limitados. A valorização é agressiva e garantida.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experiência Rio -->
+    <section class="bg-stone-900 overflow-hidden">
+        <div class="grid grid-cols-1 lg:grid-cols-2">
+            <div class="h-[400px] lg:h-auto">
+                <img src="https://www.haydenoutdoors.com/wp-content/uploads/2025/07/LEEDER-BLUFF-ACRES_DRONE-12-1753966344-scaled.jpg" 
+                     alt="Vista Panorâmica" class="w-full h-full object-cover grayscale-[10%]">
+            </div>
+            <div class="p-12 md:p-24 flex flex-col justify-center bg-[#0b1c10] border-l-4 border-accent">
+                <h2 class="text-4xl md:text-6xl font-black mb-8 leading-tight uppercase text-white">
+                    O REFÚGIO ONDE <br /> 
+                    <span class="text-accent">O TEMPO DESACELERA</span>
+                </h2>
+                <p class="text-xl text-stone-400 mb-10 leading-relaxed italic border-l-4 pl-6 border-stone-800">
+                    "Nada substitui a experiência de ver o pôr do sol refletido nas águas do Velho Chico. 
+                    Aqui, o estresse da cidade morre e o seu lazer ganha vida."
+                </p>
+                <ul class="space-y-6">
+                    <li class="flex items-center gap-4 text-xl font-bold">
+                        <i data-lucide="check-circle-2" class="w-7 h-7 text-accent"></i> Acesso exclusivo ao Rio São Francisco
+                    </li>
+                    <li class="flex items-center gap-4 text-xl font-bold">
+                        <i data-lucide="check-circle-2" class="w-7 h-7 text-accent"></i> Área de pesca e lazer para família
+                    </li>
+                    <li class="flex items-center gap-4 text-xl font-bold">
+                        <i data-lucide="check-circle-2" class="w-7 h-7 text-accent"></i> Infraestrutura pensada na natureza
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Investimento Card -->
+    <section class="py-32 relative px-4">
+        <div class="container mx-auto text-center">
+            <h2 class="text-3xl font-black uppercase tracking-[0.2em] mb-16 opacity-50">Condições de Pagamento</h2>
+            
+            <div class="max-w-3xl mx-auto bg-[#07130a] rounded-[4rem] p-12 md:p-20 text-white shadow-3xl border-2 border-stone-800 relative overflow-hidden">
+                <div class="absolute top-0 right-0 bg-white text-primary px-10 py-3 font-black text-sm uppercase rounded-bl-[2rem]">
+                    Oportunidade de Abril
+                </div>
+                
+                <p class="text-stone-500 uppercase font-black mb-6 tracking-widest">Parcelas a partir de</p>
+                <div class="text-8xl md:text-[11rem] font-black mb-4 tracking-tighter leading-none text-accent">
+                    R$ 589
+                </div>
+                <p class="text-3xl font-bold text-stone-300 mb-12">ou apenas <span class="text-white underline underline-offset-8">R$ 19,60 por dia</span></p>
+                
+                <div class="bg-primary p-8 rounded-[2rem] mb-12 border border-stone-800 shadow-inner">
+                    <p class="text-lg text-stone-400 font-medium">
+                        "O melhor investimento não é o mais caro, mas aquele que você pode pagar sem sacrificar seu estilo de vida."
+                    </p>
+                </div>
+
+                <p class="font-black uppercase text-2xl animate-pulse tracking-widest text-accent">
+                    ÚLTIMAS 3 UNIDADES COM ESTE VALOR!
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tabela Comparativa -->
+    <section class="py-24 bg-[#07130a]">
+        <div class="container mx-auto px-4">
+            <h2 class="text-center text-4xl font-black text-white uppercase mb-16 tracking-tighter">Comparativo de Facilidade</h2>
+            <div class="max-w-4xl mx-auto overflow-x-auto rounded-[2rem] shadow-2xl border border-stone-800">
+                <table class="w-full text-left border-collapse bg-[#0b1c10] min-w-[600px]">
+                    <thead>
+                        <tr class="bg-stone-900/50">
+                            <th class="p-8 font-black text-stone-500 uppercase">Diferenciais</th>
+                            <th class="p-8 font-black text-stone-500 uppercase">Bancos</th>
+                            <th class="p-8 font-black text-accent uppercase">Moradas Velho Chico</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="border-b border-stone-800/50">
+                            <td class="p-8 font-bold text-white">Análise de Crédito</td>
+                            <td class="p-8 text-stone-600">SPC/Serasa Rígido</td>
+                            <td class="p-8 font-black text-green-500">SEM CONSULTA</td>
+                        </tr>
+                        <tr class="border-b border-stone-800/50 bg-[#0f2615]/10">
+                            <td class="p-8 font-bold text-white">Taxa de Juros</td>
+                            <td class="p-8 text-stone-600">Altas e Abusivas</td>
+                            <td class="p-8 font-black text-green-500">DIRETO E FIXO</td>
+                        </tr>
+                        <tr class="border-b border-stone-800/50">
+                            <td class="p-8 font-bold text-white">Liberação</td>
+                            <td class="p-8 text-stone-600">Meses de Espera</td>
+                            <td class="p-8 font-black text-green-500 uppercase">Imediata</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- Formulário -->
+    <section id="cadastro-form" class="py-24 relative z-30">
+        <div class="container mx-auto px-4">
+            <div class="max-w-6xl mx-auto bg-[#07130a] rounded-[3.5rem] shadow-3xl overflow-hidden grid grid-cols-1 lg:grid-cols-2 border border-stone-800">
+                <div class="p-12 md:p-20 flex flex-col justify-center bg-accent">
+                    <h2 class="text-5xl md:text-6xl font-black mb-8 uppercase leading-[0.9] text-primary">
+                        Garanta sua <br /> cota hoje!
+                    </h2>
+                    <p class="text-xl mb-12 text-primary font-bold opacity-90 leading-relaxed">
+                        Preencha os dados e receba o catálogo completo via WhatsApp. Não perca a chance de ter seu pedaço no São Francisco.
+                    </p>
+                    <div class="space-y-8">
+                        <div class="flex items-center gap-6">
+                            <div class="p-4 bg-primary rounded-2xl text-white shadow-xl"><i data-lucide="clock" class="w-8 h-8"></i></div>
+                            <div>
+                                <p class="font-black text-primary text-xl uppercase">Resposta Rápida</p>
+                                <p class="text-primary font-bold opacity-70">Consultores de plantão agora</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-6">
+                            <div class="p-4 bg-primary rounded-2xl text-white shadow-xl"><i data-lucide="shield-check" class="w-8 h-8"></i></div>
+                            <div>
+                                <p class="font-black text-primary text-xl uppercase">Compra Segura</p>
+                                <p class="text-primary font-bold opacity-70">Documentação 100% ok</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="p-12 md:p-20 bg-primary">
+                    <form id="landingForm" class="space-y-6">
+                        <div>
+                            <label class="block text-xs font-black text-stone-500 mb-3 uppercase tracking-[0.2em]">Nome Completo</label>
+                            <input required type="text" id="nome" placeholder="Como deseja ser chamado?"
+                                class="w-full p-5 rounded-2xl bg-[#07130a] border-2 border-stone-800 text-white focus:border-accent focus:outline-none transition-all text-lg placeholder:text-stone-700">
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-xs font-black text-stone-500 mb-3 uppercase tracking-[0.2em]">Seu WhatsApp</label>
+                                <input required type="tel" id="telefone" placeholder="(00) 00000-0000"
+                                    class="w-full p-5 rounded-2xl bg-[#07130a] border-2 border-stone-800 text-white focus:border-accent focus:outline-none transition-all text-lg placeholder:text-stone-700">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-black text-stone-500 mb-3 uppercase tracking-[0.2em]">Sua Cidade</label>
+                                <input required type="text" id="cidade" placeholder="Onde você mora?"
+                                    class="w-full p-5 rounded-2xl bg-[#07130a] border-2 border-stone-800 text-white focus:border-accent focus:outline-none transition-all text-lg placeholder:text-stone-700">
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-black text-stone-500 mb-3 uppercase tracking-[0.2em]">Forma de Pagamento</label>
+                            <select required id="formaPagamento"
+                                class="w-full p-5 rounded-2xl bg-[#07130a] border-2 border-stone-800 text-white focus:border-accent focus:outline-none transition-all text-lg cursor-pointer">
+                                <option value="">Selecione a melhor opção...</option>
+                                <option value="Parcelamento Loteador">Parcelamento Direto com Loteador</option>
+                                <option value="Pagamento à Vista">À Vista (com desconto especial)</option>
+                                <option value="Entrada + Parcelas">Entrada facilitada + Parcelas</option>
+                            </select>
+                        </div>
+                        <button type="submit"
+                            class="w-full py-7 rounded-[1.5rem] bg-accent text-primary text-xl font-black uppercase tracking-[0.1em] shadow-[0_20px_40px_rgba(244,148,12,0.2)] transform hover:scale-[1.02] active:scale-95 transition-all flex items-center justify-center gap-4">
+                            Receber Catálogo Agora <i data-lucide="zap" class="w-6 h-6 fill-current"></i>
+                        </button>
+                        <p class="text-center text-stone-600 text-[10px] font-bold uppercase tracking-widest">Seus dados estão protegidos pela LGPD.</p>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-[#07130a] py-24 text-stone-500 border-t border-stone-900">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-16 mb-20 text-center md:text-left">
+                <div>
+                    <h3 class="text-3xl font-black mb-8 uppercase text-white tracking-tighter">
+                        MORADAS DO <br /> <span class="text-accent">VELHO CHICO</span>
+                    </h3>
+                    <p class="text-lg leading-relaxed max-w-xs mx-auto md:mx-0">
+                        Investimento seguro e lazer inesquecível na região mais valorizada de Pompéu/MG.
+                    </p>
+                </div>
+                <div class="flex flex-col items-center justify-center">
+                    <h4 class="text-white font-black mb-6 uppercase tracking-widest text-sm opacity-50">Contato Oficial</h4>
+                    <a href="tel:+5531991242924" class="text-4xl font-black text-accent hover:text-white transition-colors tracking-tighter">
+                        (31) 99124-2924
+                    </a>
+                    <p class="mt-4 font-bold uppercase text-[10px] tracking-widest">Segunda a Domingo - 08h às 20h</p>
+                </div>
+                <div class="flex flex-col items-center md:items-end justify-center">
+                    <div class="flex gap-6 mb-8">
+                        <i data-lucide="users" class="hover:text-white cursor-pointer transition-colors w-9 h-9"></i>
+                        <i data-lucide="map-pin" class="hover:text-white cursor-pointer transition-colors w-9 h-9"></i>
+                        <i data-lucide="trending-up" class="hover:text-white cursor-pointer transition-colors w-9 h-9"></i>
+                    </div>
+                    <p class="text-sm font-black uppercase text-white tracking-widest">Pompéu - Minas Gerais</p>
+                    <p class="text-[10px] mt-2 opacity-30">© 2024 Moradas do Velho Chico. Todos os direitos reservados.</p>
+                </div>
+            </div>
+            
+            <div class="text-center pt-12 border-t border-stone-900/50">
+                <div class="flex justify-center items-center gap-10 mb-6">
+                    <div class="text-center">
+                        <span id="h" class="text-2xl font-black block text-white">12</span>
+                        <span class="text-[9px] uppercase font-bold opacity-30">Horas</span>
+                    </div>
+                    <div class="text-center">
+                        <span id="m" class="text-2xl font-black block text-white">45</span>
+                        <span class="text-[9px] uppercase font-bold opacity-30">Minutos</span>
+                    </div>
+                    <div class="text-center">
+                        <span id="s" class="text-2xl font-black block text-accent">00</span>
+                        <span class="text-[9px] uppercase font-bold opacity-30">Segundos</span>
+                    </div>
+                </div>
+                <p class="text-[9px] uppercase tracking-[0.4em] font-black opacity-20">Condições válidas apenas enquanto o cronômetro estiver ativo</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize Icons
+        lucide.createIcons();
+
+        // Timer Logic
+        let timeLeft = { hours: 12, minutes: 45, seconds: 0 };
+        function updateDisplay() {
+            document.getElementById('h').innerText = String(timeLeft.hours).padStart(2, '0');
+            document.getElementById('m').innerText = String(timeLeft.minutes).padStart(2, '0');
+            document.getElementById('s').innerText = String(timeLeft.seconds).padStart(2, '0');
+        }
+
+        setInterval(() => {
+            if (timeLeft.seconds > 0) {
+                timeLeft.seconds--;
+            } else {
+                if (timeLeft.minutes > 0) {
+                    timeLeft.minutes--;
+                    timeLeft.seconds = 59;
+                } else {
+                    if (timeLeft.hours > 0) {
+                        timeLeft.hours--;
+                        timeLeft.minutes = 59;
+                        timeLeft.seconds = 59;
+                    }
+                }
+            }
+            updateDisplay();
+        }, 1000);
+
+        // Form Submission to WhatsApp
+        document.getElementById('landingForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const nome = document.getElementById('nome').value;
+            const telefone = document.getElementById('telefone').value;
+            const cidade = document.getElementById('cidade').value;
+            const formaPagamento = document.getElementById('formaPagamento').value;
+
+            const message = `*NOVO INTERESSE - MORADAS DO VELHO CHICO*%0A%0A` +
+                            `*Nome:* ${nome}%0A` +
+                            `*Telefone:* ${telefone}%0A` +
+                            `*Cidade:* ${cidade}%0A` +
+                            `*Pagamento:* ${formaPagamento}%0A%0A` +
+                            `_Enviado via Landing Page_`;
+
+            const whatsappUrl = `https://wa.me/5531991242924?text=${message}`;
+            window.open(whatsappUrl, '_blank');
+        });
     </script>
 </body>
-
 </html>
